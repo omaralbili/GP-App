@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="utf-8" />
+    <title>AI Chatbot - بشمهندس أحمد</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif
+        }
+        
+        body {
+            margin: 0;
+            background: #0f172a;
+            height: 100vh;
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-end;
+            padding: 20px
+        }
+        
+        .chat-btn {
+            width: 62px;
+            height: 62px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6a00f4, #8e2de2);
+            color: #fff;
+            font-size: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .4);
+            z-index: 999
+        }
+        
+        .chat-panel {
+            width: 360px;
+            max-width: 95%;
+            height: 520px;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, .4);
+            overflow: hidden;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            margin-right: 12px;
+            direction: rtl
+        }
+        
+        .chat-header {
+            background: linear-gradient(135deg, #6a00f4, #8e2de2);
+            color: #fff;
+            padding: 12px;
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+            align-items: center
+        }
+        
+        .messages {
+            flex: 1;
+            padding: 12px;
+            overflow: auto;
+            background: #f4f6fb
+        }
+        
+        .msg {
+            max-width: 80%;
+            padding: 10px 14px;
+            border-radius: 14px;
+            margin-bottom: 10px;
+            font-size: 14px
+        }
+        
+        .user {
+            background: #6a00f4;
+            color: #fff;
+            margin-left: auto;
+            border-bottom-right-radius: 4px
+        }
+        
+        .bot {
+            background: #e6e9ff;
+            color: #111;
+            border-bottom-left-radius: 4px
+        }
+        
+        .input-area {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #eee;
+            background: #fff
+        }
+        
+        .input-area input {
+            flex: 1;
+            padding: 10px;
+            border-radius: 20px;
+            border: 1px solid #ddd;
+            outline: none
+        }
+        
+        .input-area button {
+            margin-left: 10px;
+            padding: 0 14px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6a00f4, #8e2de2);
+            border: none;
+            color: #fff;
+            cursor: pointer
+        }
+        
+        .small {
+            font-size: 12px;
+            color: #ddd
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- زر الفتح -->
+    <div class="chat-btn" id="openBtn" title="افتح الشات">💬</div>
+
+    <!-- لوحة الشات (مخفية افتراضيًا) -->
+    <div class="chat-panel" id="chatPanel" style="display:none">
+        <div class="chat-header">
+            <div>🤖 شات ذكي</div>
+            <div style="cursor:pointer" id="closeBtn">✖</div>
+        </div>
+
+        <div class="messages" id="messages">
+            <div class="msg bot">مرحباً يا بشمهندس أحمد 👋 — أكتب سؤالك وسأجيب بتفصيل.</div>
+        </div>
+
+        <div class="input-area">
+            <input id="userInput" placeholder="اكتب سؤالك هنا..." autocomplete="off" />
+            <button id="sendBtn">➤</button>
+        </div>
+        <div style="padding:6px 12px" class="small">المحادثة تُرسل للخادم لاستخدام OpenAI. المفتاح مؤمَّن بالخادم.</div>
+    </div>
+
+    <script>
+        // واجهة المستخدم: فتح/إغلاق
+        const openBtn = document.getElementById('openBtn');
+        const chatPanel = document.getElementById('chatPanel');
+        const closeBtn = document.getElementById('closeBtn');
+        const messages = document.getElementById('messages');
+        const userInput = document.getElementById('userInput');
+        const sendBtn = document.getElementById('sendBtn');
+
+        openBtn.onclick = () => chatPanel.style.display = 'flex';
+        closeBtn.onclick = () => chatPanel.style.display = 'none';
+        sendBtn.onclick = sendMessage;
+        userInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+
+        async function sendMessage() {
+            const text = userInput.value.trim();
+            if (!text) return;
+            appendMsg('user', text);
+            userInput.value = '';
+            // عرض مؤشر مؤقت
+            const temp = appendMsg('bot', 'جاري الكتابة...');
+            try {
+                // نرسل للباك إند (مسار /api/chat)
+                const res = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message: text
+                    })
+                });
+                if (!res.ok) {
+                    const err = await res.text();
+                    temp.innerText = 'حدث خطأ: ' + err;
+                    return;
+                }
+                const data = await res.json();
+                // نتوقع { reply: "..." }
+                temp.innerText = data.reply;
+            } catch (err) {
+                temp.innerText = 'خطأ في الاتصال بالخادم.';
+                console.error(err);
+            }
+            messages.scrollTop = messages.scrollHeight;
+        }
+
+        function appendMsg(kind, txt) {
+            const d = document.createElement('div');
+            d.className = 'msg ' + (kind === 'user' ? 'user' : 'bot');
+            d.innerText = txt;
+            messages.appendChild(d);
+            messages.scrollTop = messages.scrollHeight;
+            return d;
+        }
+    </script>
+
+</body>
+
+</html>

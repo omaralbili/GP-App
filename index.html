@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول - تصميم عصري</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+         :root {
+            --primary-color: #4a00e0;
+            /* بنفسجي غامق أساسي */
+            --secondary-color: #000459;
+            /* بنفسجي فاتح ثانوي */
+            --background-color: #f0f2f5;
+            /* خلفية فاتحة هادئة */
+            --card-color: #ffffff;
+            /* لون بطاقة النموذج */
+            --text-color: #333;
+            --input-border: #ccc;
+        }
+        /* --- الأنماط الأساسية --- */
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+            color: var(--text-color);
+        }
+        /* --- حاوية تسجيل الدخول (Card) --- */
+        
+        .login-container {
+            width: 90%;
+            max-width: 400px;
+            background-color: var(--card-color);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+        
+        .login-container:hover {
+            transform: translateY(-5px);
+        }
+        /* --- العنوان --- */
+        
+        .login-container h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+            font-size: 28px;
+            font-weight: 700;
+        }
+        /* --- حقول الإدخال (Input Fields) --- */
+        
+        .input-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--input-border);
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            direction: rtl;
+            /* لضمان صحة الكتابة العربية */
+            text-align: right;
+        }
+        
+        .input-group input:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(142, 45, 226, 0.2);
+            outline: none;
+        }
+        /* --- زر تسجيل الدخول (Button) --- */
+        
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(90deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(142, 45, 226, 0.4);
+            margin-top: 15px;
+        }
+        
+        .login-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(142, 45, 226, 0.6);
+        }
+        /* --- روابط إضافية --- */
+        
+        .links-group {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 14px;
+        }
+        
+        .links-group a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        
+        .links-group a:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+        
+        .links-group span {
+            margin: 0 10px;
+            color: #999;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-container">
+        <h2>تسجيل الدخول 👋</h2>
+        <form>
+            <div class="input-group">
+                <label for="email">البريد الإلكتروني</label>
+                <input type="email" id="email" placeholder="أدخل بريدك الإلكتروني" required>
+            </div>
+
+            <div class="input-group">
+                <label for="password">كلمة المرور</label>
+                <input type="password" id="password" placeholder="أدخل كلمة المرور" required>
+            </div>
+
+            <button type="submit" class="login-btn">
+                دخول
+            </button>
+        </form>
+
+        <div class="links-group">
+            <a href="#">نسيت كلمة المرور؟</a>
+            <span>|</span>
+            <a href="#">إنشاء حساب جديد</a>
+        </div>
+    </div>
+
+    <script>
+        const loginForm = document.querySelector('form');
+
+        loginForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Email validation regex
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (!emailRegex.test(email)) {
+                alert('الرجاء إدخال بريد إلكتروني صحيح.');
+                return;
+            }
+
+            if (password !== '12345') {
+                alert('كلمة المرور غير صحيحة.');
+                return;
+            }
+
+            // Redirect to home.html after successful login
+            window.location.href = 'home.html';
+        });
+    </script>
+
+</body>
+
+</html>

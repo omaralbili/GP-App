@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تواصل معنا - مبادئ التكنولوجيا</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        /* الخط الأساسي */
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Cairo", sans-serif;
+            background: #0b035b;
+        }
+        /* شريط التنقل (الـ Navbar) */
+        
+        .navbar {
+            background: rgb(255, 255, 255);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: center;
+        }
+        /* قائمة الروابط */
+        
+        .nav-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 30px;
+        }
+        /* رابط التبويب */
+        
+        .nav-item a {
+            text-decoration: none;
+            color: #5b3367;
+            font-weight: 600;
+            font-size: 66px;
+            padding: 5px 0;
+            transition: color 0.3s ease, border-bottom 0.3s ease;
+            position: relative;
+        }
+        /* تأثير أسفل الرابط عند المرور */
+        
+        .nav-item a::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 3px;
+            background: #740537;
+            position: absolute;
+            bottom: -5px;
+            right: 0;
+            transition: width 0.3s ease;
+        }
+        /* حالة النشاط أو المرور */
+        
+        .nav-item a:hover,
+        .nav-item a.active {
+            color: #5a092d;
+        }
+        
+        .nav-item a:hover::after,
+        .nav-item a.active::after {
+            width: 100%;
+        }
+        /* خلفية قسم التواصل */
+        
+        .contact-section {
+            text-align: center;
+            padding: 80px 20px;
+            background: linear-gradient(180deg, #53092b 0%, #5b3367 100%);
+            color: white;
+            border-radius: 0 0 60px 60px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+        /* العنوان */
+        
+        .title {
+            font-size: 48px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        /* نص أسفل العنوان */
+        
+        .subtitle {
+            font-size: 30px;
+            margin-bottom: 50px;
+            opacity: 0.9;
+        }
+        /* === تنسيق الملفات التعريفية المحسَّن === */
+        
+        .profiles {
+            display: flex;
+            justify-content: center;
+            gap: 80px;
+            flex-wrap: wrap;
+            margin: 0 auto;
+        }
+        
+        .profile {
+            width: 340px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        /* ======================================= */
+        /* الدائرة للصورة */
+        
+        .image-box {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 6px solid #eb2c83;
+            box-shadow: 0 0 20px #ff70b3;
+            transition: 0.3s ease;
+            margin: 0 auto;
+        }
+        /* الصورة داخل الدائرة */
+        
+        .image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        /* تأثير عند المرور على الصورة */
+        
+        .image-box:hover {
+            transform: scale(1.08);
+            box-shadow: 0 0 30px #ff8ac5, 0 0 50px #e2006b;
+        }
+        /* اسم الدكتورة بالكامل */
+        
+        .profile h3 {
+            font-size: 30px;
+            margin-top: 15px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        /* التخصص والجامعة */
+        
+        .profile p {
+            font-size: 16px;
+            opacity: 0.9;
+            margin: 2px 0;
+        }
+        /* حاوية الروابط */
+        
+        .contact-links {
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        /* الروابط نفسها (الهاتف والبريد) */
+        
+        .contact-link {
+            color: white;
+            background: #eb2c83;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            text-decoration: none;
+            transition: background 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        /* تأثير عند المرور على الرابط */
+        
+        .contact-link:hover {
+            background: #ff5f9e;
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <ul class="nav-list">
+            <li><a href="Home.html">الرئيسية</a></li>
+            <li><a href="instructions.html">تعليمات البيئة</a></li>
+            <li><a href="goals.html">الأهداف</a></li>
+            <li><a href="overall.html">المقياس</a></li>
+            <li><a href="modules.html">الموديولات</a></li>
+            <li><a href="test.html">الاختبار</a></li>
+            <li><a href="Connect.html" class="active">تواصل معنا</a></li>
+        </ul>
+    </nav>
+
+    <section class="contact-section">
+        <h1 class="title">تواصل معنا</h1>
+        <p class="subtitle">يمكنك التواصل مع أعضاء هيئة التدريس المسئولين عن المحتوى</p>
+
+        <div class="profiles">
+
+            <div class="profile">
+                <div class="image-box">
+                    <img src="najlaa.jpeg" alt="د. نجلاء سعيد محمد">
+                </div>
+                <h3>أ.م.د/ نجـلاء سعيد محمد</h3>
+                <p>أستاذ مساعد تكنولوجيا التعليم</p>
+                <p>كلية التربية النوعية</p>
+                <p>جامعة الزقازيق</p>
+
+                <div class="contact-links">
+                    <a href="tel:+201096355639" class="contact-link" aria-label="رقم هاتف دكتورة نجلاء">
+                        <i class="fas fa-phone"></i>
+                    </a>
+                    <a href="mailto:Drnaglaa2070@gmail.com" class="contact-link" aria-label="البريد الإلكتروني لدكتورة نجلاء">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="profile">
+                <div class="image-box">
+                    <img src="lamyaa.jpeg" alt="د. لمياء محمد الهادي">
+                </div>
+                <h3>د/ لمياء محمد الهادي عبد العظيم</h3>
+                <p>مدرس تكنولوجيا التعليم</p>
+                <p>كلية التربية النوعية</p>
+                <p>جامعة الزقازيق</p>
+
+                <div class="contact-links">
+                    <a href="tel:+201062519596" class="contact-link" aria-label="رقم هاتف دكتورة لمياء">
+                        <i class="fas fa-phone"></i>
+                    </a>
+                    <a href="mailto:lamiaaelhady11@gmail.com" class="contact-link" aria-label="البريد الإلكتروني لدكتورة لمياء">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+</body>
+
+</html>

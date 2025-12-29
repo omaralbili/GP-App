@@ -1,0 +1,718 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>واجهة الموديولات HTML</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+         :root {
+            --pink: #3f0033;
+            --navy: #091433;
+            --blue-dark: #0b3c88;
+        }
+        
+        * {
+            box-sizing: border-box
+        }
+        
+        body {
+            margin: 0;
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(90deg, #0f2340 35%, var(--pink) 35%);
+            min-height: 100vh;
+            color: #fff;
+            overflow-x: hidden;
+        }
+        /* ===== HEADER / NAVIGATION STYLES - MODIFIED ===== */
+        
+        header {
+            display: flex;
+            /* توسيط العناصر داخله */
+            justify-content: center;
+            gap: 28px;
+            padding: 28px 48px;
+            align-items: center
+        }
+        
+        nav {
+            display: flex;
+            gap: 28px;
+            /* إزالة خاصية margin-left: auto; لتوسيط القائمة */
+            animation: dropDown 0.7s ease-out;
+        }
+        
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            opacity: 0.95;
+            transition: 0.3s ease;
+            position: relative;
+        }
+        
+        nav a.active {
+            border-bottom: 3px solid #7ce0ff;
+            padding-bottom: 4px;
+            transition: 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.18);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25)
+        }
+        
+        @keyframes dropDown {
+            0% {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        /* ===== LAYOUT ===== */
+        
+        .container {
+            display: flex;
+            align-items: flex-start;
+            gap: 40px;
+            padding: 20px 48px
+        }
+        /* ===== LEFT SECTION (Video/Content) ===== */
+        
+        .left {
+            background: var(--navy);
+            width: 66%;
+            height: auto;
+            min-height: 72vh;
+            border-radius: 0 80px 80px 0;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+            padding: 48px;
+            position: relative;
+            overflow: hidden
+        }
+        
+        .left .frame {
+            width: 70%;
+            min-width: 420px;
+            background: #f0f3f7;
+            padding: 18px;
+            border-radius: 6px;
+            margin: 40px auto;
+            box-shadow: 16px 18px 30px rgba(0, 0, 0, 0.4);
+            aspect-ratio: 16/9;
+            height: auto;
+            overflow: hidden;
+            color: var(--navy);
+        }
+        
+        .left .frame h2 {
+            margin-top: 0;
+            color: var(--pink);
+        }
+        /* Style for video inside the frame */
+        
+        .left .frame video {
+            width: 100%;
+            height: 100%;
+            display: block;
+            border-radius: 4px;
+        }
+        /* Style for text content inside the frame */
+        
+        .left .frame .content-display {
+            padding: 20px;
+            height: 100%;
+            overflow-y: auto;
+        }
+        
+        .caption {
+            color: #ffffff;
+            background: transparent;
+            padding: 18px 10px;
+            text-align: center;
+            font-weight: 700;
+            margin-top: 8px
+        }
+        
+        .left .decor-vertical {
+            position: absolute;
+            left: 20px;
+            top: 40%;
+            width: 8px;
+            height: 120px;
+            background: #fff;
+            opacity: 0.9;
+            border-radius: 4px
+        }
+        
+        .left .dots {
+            position: absolute;
+            right: 28px;
+            top: 28px;
+            display: grid;
+            grid-template-columns: repeat(5, 8px);
+            gap: 8px;
+            opacity: 0.18
+        }
+        
+        .left .dots span {
+            width: 6px;
+            height: 6px;
+            background: #9fb3d6;
+            border-radius: 50%
+        }
+        /* ===== RIGHT SECTION (Buttons) ===== */
+        
+        .right {
+            width: 34%;
+            height: auto;
+            padding: 80px 48px 48px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 22px
+        }
+        
+        .module {
+            width: 100%;
+            max-width: 300px;
+            text-align: center;
+        }
+        
+        .btn {
+            width: 95%;
+            max-width: 300px;
+            padding: 20px 22px;
+            border-radius: 32px;
+            text-align: center;
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1.15rem;
+            box-shadow: inset 10px 10px 20px rgba(0, 0, 0, 0.15);
+            background: linear-gradient(90deg, #0f2340, #e89ccf);
+            color: #fff;
+            transition: all .25s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+        /* DROPDOWN MENU */
+        
+        .dropdown {
+            margin-top: 10px;
+            background: #0f2340;
+            padding: 10px;
+            border-radius: 18px;
+            display: none;
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+        }
+        
+        .sub-btn {
+            width: 100%;
+            margin: 6px 0;
+            padding: 10px 12px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(90deg, #ffb7d9, #7a57ff);
+            font-weight: 700;
+            font-size: 1rem;
+            color: #0f2340;
+            cursor: pointer;
+            transition: transform .2s ease, box-shadow .2s ease;
+        }
+        
+        .sub-btn:hover {
+            transform: scale(1.03);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .module.active .dropdown {
+            display: block;
+            max-height: 200px;
+            padding: 10px;
+        }
+        
+        .arrows-top {
+            position: absolute;
+            left: 18px;
+            top: 18px;
+            color: #fff;
+            opacity: 0.85
+        }
+        /* ===== RESPONSIVE ===== */
+        
+        @media (max-width:1000px) {
+            body {
+                background: linear-gradient(180deg, var(--pink) 36%, #0f2340 36%)
+            }
+            /* توسيط العنوان على الشاشات الصغيرة */
+            header {
+                justify-content: center;
+            }
+            .container {
+                flex-direction: column;
+                align-items: stretch
+            }
+            .left,
+            .right {
+                width: 100%;
+                border-radius: 20px;
+                height: auto;
+                min-height: auto;
+            }
+            .left .frame {
+                width: 92%;
+                min-width: auto
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="arrows-top">&gt;&gt;&gt;&gt;&gt;</div>
+        <nav>
+            <a href="Home.html">الرئيسية</a>
+            <a href="instructions.html">تعليمات البيئه</a>
+            <a href="goals.html">الاهداف</a>
+            <a href="overall.html">المقياس</a>
+            <a class="active" href="#">الموديولات</a>
+            <a href="test.html">الاختبار</a>
+            <a href="Connect.html">التواصل معنا</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <aside class="right">
+
+            <div class="module">
+                <button class="btn module-btn" data-video="module1.mp4" data-title="الأسس النظرية للاختبارات الإلكترونية">الموديول الأول</button>
+                <div class="dropdown">
+                    <button class="sub-btn" data="m1g">الأهداف</button>
+                    <button class="sub-btn" data="m1c">المحتوى</button>
+                    <button class="sub-btn" data="m1a">الأنشطة</button>
+                </div>
+            </div>
+
+            <div class="module">
+                <button class="btn module-btn" data-video="module2.mp4" data-title="المهارات التمهيدية لإنتاج الاختبارات الإلكترونية من خلال منصة (Quizizz)">الموديول الثاني</button>
+                <div class="dropdown">
+                    <button class="sub-btn" data="m2g">الأهداف</button>
+                    <button class="sub-btn" data="m2c">المحتوى</button>
+                    <button class="sub-btn" data="m2a">الأنشطة</button>
+                </div>
+            </div>
+
+            <div class="module">
+                <button class="btn module-btn" data-video="module3.mp4" data-title="إنشاء المحتوى التعليمي وإدارته للاختبارات الإلكترونية من خلال منصة (Quizizz)">الموديول الثالث</button>
+                <div class="dropdown">
+                    <button class="sub-btn" data="m3g">الأهداف</button>
+                    <button class="sub-btn" data="m3c">المحتوى</button>
+                    <button class="sub-btn" data="m3a">الأنشطة</button>
+                </div>
+            </div>
+
+            <div class="module">
+                <button class="btn module-btn" data-video="module4.mp4" data-title="إدارة التفاعل وتحليل أداء أعضاء هيئة التدريس للاختبارات من خلال منصة (Quizizz)">الموديول الرابع</button>
+                <div class="dropdown">
+                    <button class="sub-btn" data="m4g">الأهداف</button>
+                    <button class="sub-btn" data="m4c">المحتوى</button>
+                    <button class="sub-btn" data="m4a">الأنشطة</button>
+                </div>
+            </div>
+
+            <div style="margin-top:18px;color:#fff;font-weight:700;opacity:0.9">&gt;&gt;&gt;&gt;&gt;</div>
+        </aside>
+
+        <section class="left">
+            <div class="decor-vertical"></div>
+            <div class="dots">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <div class="frame" id="frame">
+                <video id="mainVideo" width="100%" height="100%" controls style="border-radius: 6px;">
+                    <source id="videoSrc" src="module1.mp4" type="video/mp4">
+                    متصفحك لا يدعم الفيديو
+                </video>
+
+                <div class="content-display" id="contentDisplay" style="display: none;">
+                    <h2>مرحبًا 👋</h2>
+                    <p>اختاري موديول ثم (أهداف – محتوى – أنشطة) لعرض التفاصيل.</p>
+                </div>
+            </div>
+
+            <div class="caption" id="videoTitle">
+                الأسس النظرية للاختبارات الإلكترونية
+            </div>
+
+        </section>
+    </div>
+
+    <script>
+        const frame = document.getElementById("frame");
+        const video = document.getElementById("mainVideo");
+        const source = document.getElementById("videoSrc");
+        const caption = document.getElementById("videoTitle");
+        const contentDisplay = document.getElementById("contentDisplay");
+
+        // Function to show the video player and hide the text content
+        function showVideoPlayer(fileName, title) {
+            video.style.display = 'block';
+            contentDisplay.style.display = 'none';
+            source.src = fileName;
+            caption.textContent = title;
+            video.load();
+            video.play();
+        }
+
+        // Function to show the text content and hide the video player
+        function showTextContent(htmlContent, title) {
+            video.pause(); // إيقاف تشغيل الفيديو عند عرض المحتوى النصي
+            video.style.display = 'none';
+            contentDisplay.style.display = 'block';
+            contentDisplay.innerHTML = htmlContent;
+            caption.textContent = title;
+        }
+
+        // 1. Module Button Click Handler (Handles dropdown toggle and video loading)
+        document.querySelectorAll(".module-btn").forEach(btn => {
+            btn.onclick = () => {
+                const m = btn.parentElement;
+
+                // Toggle dropdown state
+                document.querySelectorAll(".module").forEach(x => {
+                    if (x !== m) x.classList.remove("active");
+                });
+                m.classList.toggle("active");
+
+                // Load the default video for the module when button is clicked
+                const videoFile = btn.getAttribute("data-video");
+                const videoTitle = btn.getAttribute("data-title");
+                showVideoPlayer(videoFile, videoTitle);
+            }
+        });
+
+        // 2. Sub-Button Data/Content Definitions
+        const titles = {
+            m1g: "الأسس النظرية للاختبارات الإلكترونية: الأهداف",
+            m1c: "الأسس النظرية للاختبارات الإلكترونية: المحتوى",
+            m1a: "الأسس النظرية للاختبارات الإلكترونية: الأنشطة",
+            m2g: "المهارات التمهيدية لإنتاج الاختبارات الإلكترونية من خلال منصة (Quizizz): الأهداف",
+            m2c: "المهارات التمهيدية لإنتاج الاختبارات الإلكترونية من خلال منصة (Quizizz): المحتوى",
+            m2a: "المهارات التمهيدية لإنتاج الاختبارات الإلكترونية من خلال منصة (Quizizz): الأنشطة",
+            m3g: "إنشاء المحتوى التعليمي وإدارته للاختبارات الإلكترونية من خلال منصة (Quizizz): الأهداف",
+            m3c: "إنشاء المحتوى التعليمي وإدارته للاختبارات الإلكترونية من خلال منصة (Quizizz): المحتوى",
+            m3a: "إنشاء المحتوى التعليمي وإدارته للاختبارات الإلكترونية من خلال منصة (Quizizz): الأنشطة",
+            m4g: "إدارة التفاعل وتحليل أداء أعضاء هيئة التدريس للاختبارات من خلال منصة (Quizizz): الأهداف",
+            m4c: "إدارة التفاعل وتحليل أداء أعضاء هيئة التدريس للاختبارات من خلال منصة (Quizizz): المحتوى",
+            m4a: "إدارة التفاعل وتحليل أداء أعضاء هيئة التدريس للاختبارات من خلال منصة (Quizizz): الأنشطة",
+        };
+
+        const content = {
+            m1g: `
+<h2>الأهداف التعليمية للموديول الأول</h2>
+
+<table style="width:100%; border-collapse:collapse; background:#fff; color:#000; border-radius:10px; overflow:hidden;">
+  <thead>
+    <tr style="background:#0b3c88; color:#fff; text-align:center;">
+      <th style="padding:10px; border:1px solid #ddd;">م</th>
+      <th style="padding:10px; border:1px solid #ddd;">الهدف التعليمي</th>
+      <th style="padding:10px; border:1px solid #ddd;">مستوى الهدف</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr><td style="padding:10px; border:1px solid #ddd;">1</td><td style="padding:10px; border:1px solid #ddd;">توضح نشأة الاختبارات الإلكترونية.</td><td style="padding:10px; border:1px solid #ddd;">الفهم</td></tr>
+    <tr><td style="padding:10px; border:1px solid #ddd;">2</td><td style="padding:10px; border:1px solid #ddd;">تحدد بداية ظهور الاختبارات الإلكترونية.</td><td style="padding:10px; border:1px solid #ddd;">التذكر</td></tr>
+    <tr><td style="padding:10px; border:1px solid #ddd;">3</td><td style="padding:10px; border:1px solid #ddd;">تعرف مفهوم الاختبارات الإلكترونية.</td><td style="padding:10px; border:1px solid #ddd;">التذكر</td></tr>
+    <tr><td style="padding:10px; border:1px solid #ddd;">4</td><td style="padding:10px; border:1px solid #ddd;">تفرق بين الاختبارات الإلكترونية والاختبارات التقليدية.</td><td style="padding:10px; border:1px solid #ddd;">التحليل</td></tr>
+    <tr><td style="padding:10px; border:1px solid #ddd;">5</td><td style="padding:10px; border:1px solid #ddd;">تعدد ثلاث من مراحل إنتاج الاختبارات الإلكترونية.</td><td style="padding:10px; border:1px solid #ddd;">التذكر</td></tr>
+    <tr><td style="padding:10px; border:1px solid #ddd;">6</td><td style="padding:10px; border:1px solid #ddd;">تفرق بين مرحلة التحليل ومرحلة التصميم في إنتاج الاختبارات الإلكترونية.</td><td style="padding:10px; border:1px solid #ddd;">التحليل</td></tr>
+    <tr><td style="padding:10px; border:1px solid #ddd;">7</td><td style="padding:10px; border:1px solid #ddd;">تذكر أنواع الاختبارات الإلكترونية.</td><td style="padding:10px; border:1px solid #ddd;">التذكر</td></tr>
+    <tr><td style="padding:10px; border:1px solid #ddd;">8</td><td style="padding:10px; border:1px solid #ddd;">تفسر الفرق بين الاختبارات الموضوعية والمقالية.</td><td style="padding:10px; border:1px solid #ddd;">الفهم</td></tr>
+    <tr><td style="padding:10px; border:1px solid #ddd;">9</td><td style="padding:10px; border:1px solid #ddd;">تميز بين نوع الاختبار المناسب لكل موقف تعليمي.</td><td style="padding:10px; border:1px solid #ddd;">التحليل</td></tr>
+    <tr><td style="padding:10px; border:1px solid #ddd;">10</td><td style="padding:10px; border:1px solid #ddd;">توضح مميزات وعيوب كل نوع من أنواع الاختبارات الإلكترونية.</td><td style="padding:10px; border:1px solid #ddd;">الفهم</td></tr>
+    <tr><td style="padding:10px; border:1px solid #ddd;">11</td><td style="padding:10px; border:1px solid #ddd;">تقارن بين الخصائص التقنية لكل نوع من أنواع الاختبارات الإلكترونية.</td><td style="padding:10px; border:1px solid #ddd;">التحليل</td></tr>
+    <tr><td style="padding:10px; border:1px solid #ddd;">12</td><td style="padding:10px; border:1px solid #ddd;">تحدد نوع الاختبار المناسب لقياس مهارة معينة.</td><td style="padding:10px; border:1px solid #ddd;">التذكر</td></tr>
+    <tr><td style="padding:10px; border:1px solid #ddd;">13</td><td style="padding:10px; border:1px solid #ddd;">تستنتج فعالية الاختبارات المقالية في قياس التفكير النقدي.</td><td style="padding:10px; border:1px solid #ddd;">التحليل</td></tr>
+    <tr><td style="padding:10px; border:1px solid #ddd;">14</td><td style="padding:10px; border:1px solid #ddd;">تقيم فعالية الاختبارات التفاعلية في قياس المهارات العليا.</td><td style="padding:10px; border:1px solid #ddd;">التقييم</td></tr>
+    <tr><td style="padding:10px; border:1px solid #ddd;">15</td><td style="padding:10px; border:1px solid #ddd;">تصمم اختبارًا إلكترونيًا يجمع بين نوعين مختلفين من الاختبارات.</td><td style="padding:10px; border:1px solid #ddd;">الابتكار</td></tr>
+  </tbody>
+</table>
+`,
+            m1c: "<h2>محتوى الموديول الأول</h2><p>يشمل محتوى الوحدة الأولى موضوعات مثل: مفهوم الاختبارات الإلكترونية، أهميتها، خصائصها، أنواع الأسئلة الإلكترونية الشائعة وكيفية صياغتها بشكل فعال.</p>",
+            m1a: "<h2>عزيزي المتدرب عزيزتي المتدربة قم بعمل اختبار إلكتروني يشتمل علي عدد من أسئلة متنوعة</h2><p> </p><img src='hhh.jpeg' alt='صورة توضيحية للنشاط' style='max-width: 50%; height: auto; display: block; margin: 15px auto;'>",
+            m2g: `
+<h2>الأهداف التعليمية للموديول الثاني</h2>
+
+<table style="width:100%; border-collapse:collapse; background:#fff; color:#000; border-radius:10px; overflow:hidden;">
+  <thead>
+    <tr style="background:#0b3c88; color:#fff; text-align:center;">
+      <th style="padding:10px; border:1px solid #ddd;">الهدف</th>
+      <th style="padding:10px; border:1px solid #ddd;">مستوى الهدف</th>
+    </tr>
+  </thead>
+
+  <tbody>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تعرف مفهوم منصة Quizizz كأداة للتقييم التفاعلي.</td><td style="padding:10px; border:1px solid #ddd;">التذكر</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">توضح خصائص ومميزات استخدام Quizizz في التعليم.</td><td style="padding:10px; border:1px solid #ddd;">الفهم</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تستخدم منصة Quizizz لإنشاء اختبار تفاعلي بسيط.</td><td style="padding:10px; border:1px solid #ddd;">التطبيق</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تقارن بين منصة Quizizz وبعض أدوات التقييم الإلكتروني الأخرى.</td><td style="padding:10px; border:1px solid #ddd;">التحليل</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تقيم فعالية استخدام Quizizz في بيئات تعليمية مختلفة.</td><td style="padding:10px; border:1px solid #ddd;">التقييم</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تصمم اختبارًا تفاعليًا باستخدام Quizizz يخدم أحد الدروس التعليمية.</td><td style="padding:10px; border:1px solid #ddd;">المهاري</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تشرح دور المعلمين والطلاب والمؤسسات في استخدام منصة Quizizz.</td><td style="padding:10px; border:1px solid #ddd;">الفهم</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">توضح المتعلم كيف يستفيد كل من الفئات المستهدفة من أدوات المنصة.</td><td style="padding:10px; border:1px solid #ddd;">الفهم</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تميز المتعلم بين استخدامات المعلم والطالب للمنصة من خلال سيناريو تعليمي.</td><td style="padding:10px; border:1px solid #ddd;">التحليل</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تطبق خطوات استخدام المنصة كطالب ومعلم في موقف افتراضي.</td><td style="padding:10px; border:1px solid #ddd;">التطبيق</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تقارن بين أدوار كل من المعلمين، والطلاب، والمؤسسات على المنصة.</td><td style="padding:10px; border:1px solid #ddd;">التحليل</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تحلل مزايا استخدام المؤسسات لمنصة Quizizz.</td><td style="padding:10px; border:1px solid #ddd;">التحليل</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تعدد خطوات إنشاء حساب معلم أو طالب على منصة Quizizz.</td><td style="padding:10px; border:1px solid #ddd;">التذكر</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تشرح الفرق بين حساب المعلم وحساب الطالب عند التسجيل.</td><td style="padding:10px; border:1px solid #ddd;">الفهم</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تنشئ حساب كطالب على منصة Quizizz.</td><td style="padding:10px; border:1px solid #ddd;">المهاري</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تنشئ حساب كمعلم على منصة Quizizz.</td><td style="padding:10px; border:1px solid #ddd;">المهاري</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تميز بين خصائص التسجيل باستخدام Google أو Microsoft.</td><td style="padding:10px; border:1px solid #ddd;">التحليل</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تصمم فيديو إرشاديًا يشرح فيه خطوات التسجيل في Quizizz.</td><td style="padding:10px; border:1px solid #ddd;">المهاري</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تعدد الأقسام الرئيسية في واجهة منصة Quizizz.</td><td style="padding:10px; border:1px solid #ddd;">التذكر</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تستخدم أزرار "Create" و"Assign" و"Start a live quiz" لإنشاء اختبار وإرساله للطلاب.</td><td style="padding:10px; border:1px solid #ddd;">التطبيق</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تميز بين الوظائف المختلفة لكل من قسم "My Library" و"Reports".</td><td style="padding:10px; border:1px solid #ddd;">التحليل</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تقارن بين أدوات إنشاء المحتوى في Quizizz من حيث الاستخدام التعليمي.</td><td style="padding:10px; border:1px solid #ddd;">التحليل</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تنشئ اختبارًا تفاعليًا باستخدام أدوات Quizizz المختلفة، ويشاركه مع زملائه أو طلابه.</td><td style="padding:10px; border:1px solid #ddd;">المهاري</td></tr>
+
+  </tbody>
+</table>
+`,
+            m2c: "<h2>محتوى الموديول الثاني</h2><p>تغطية خطوات التسجيل في Quizizz، شرح المكونات الأساسية لواجهة المستخدم، والخطوات الأولى لإنشاء اختبار بسيط.</p>",
+            m2a: "<h2>أنشطة الموديول الثاني</h2><p>تطبيق عملي لتسجيل حساب على Quizizz، وإعداد اختبار تجريبي يحتوي على سؤال واحد فقط باستخدام المنصة.</p>",
+            m3g: `
+<h2>الأهداف التعليمية للموديول الثالث</h2>
+
+<table style="width:100%; border-collapse:collapse; background:#fff; color:#000; border-radius:10px; overflow:hidden;">
+  <thead>
+    <tr style="background:#0b3c88; color:#fff; text-align:center;">
+      <th style="padding:10px; border:1px solid #ddd;">الهدف</th>
+      <th style="padding:10px; border:1px solid #ddd;">مستوى الهدف</th>
+    </tr>
+  </thead>
+
+  <tbody>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تعرف المقصود بالسؤال اختيار من متعدد، والصواب والخطأ، وملء الفراغ.</td><td style="padding:10px; border:1px solid #ddd;">التذكر</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تشرح خطوات إنشاء كل نوع من أنواع الأسئلة داخل منصة Quizizz.</td><td style="padding:10px; border:1px solid #ddd;">الفهم</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تطبق خطوات إنشاء سؤال اختيار من متعدد في Quizizz بشكل صحيح.</td><td style="padding:10px; border:1px solid #ddd;">التطبيق</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تقارن بين خصائص كل من أنواع الأسئلة الثلاثة من حيث الاستخدام والفعالية.</td><td style="padding:10px; border:1px solid #ddd;">التحليل</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تقيم جودة سؤال صواب وخطأ وفقًا لمعايير الصياغة السليمة.</td><td style="padding:10px; border:1px solid #ddd;">التقييم</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تنشئ سؤال اختيار من متعدد بشكل صحيح.</td><td style="padding:10px; border:1px solid #ddd;">المهاري</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تنشئ سؤال صواب وخطأ بشكل صحيح.</td><td style="padding:10px; border:1px solid #ddd;">المهاري</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تنشئ سؤال ملء فراغ بشكل صحيح.</td><td style="padding:10px; border:1px solid #ddd;">المهاري</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تعرف بنك الأسئلة في منصة Quizizz.</td><td style="padding:10px; border:1px solid #ddd;">التذكر</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تفسر أهمية الخصائص السيكومترية للأسئلة في بنك الأسئلة.</td><td style="padding:10px; border:1px solid #ddd;">الفهم</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تطبق خطوات إنشاء اختبار باستخدام بنك الأسئلة في Quizizz.</td><td style="padding:10px; border:1px solid #ddd;">التطبيق</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تميز بين خصائص بنك الأسئلة وخصائص الاختبارات العادية.</td><td style="padding:10px; border:1px solid #ddd;">التحليل</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تقييم فعالية بنك الأسئلة في تحسين جودة التقويم الإلكتروني.</td><td style="padding:10px; border:1px solid #ddd;">التقييم</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تنشئ نموذجًا لاختبار باستخدام بنك أسئلة متكامل على Quizizz.</td><td style="padding:10px; border:1px solid #ddd;">المهاري</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تشرح معنى استيراد الأسئلة في منصة Quizizz.</td><td style="padding:10px; border:1px solid #ddd;">الفهم</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تنفذ خطوات استيراد الأسئلة من Excel إلى Quizizz.</td><td style="padding:10px; border:1px solid #ddd;">التطبيق</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تطبق خطوات تنسيق الأسئلة في ملف Excel قبل استيرادها إلى Quizizz.</td><td style="padding:10px; border:1px solid #ddd;">التطبيق</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تميز بين استيراد الأسئلة من Google Form وExcel.</td><td style="padding:10px; border:1px solid #ddd;">التحليل</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تستنتج أهمية استيراد الأسئلة بدلًا من الإدخال اليدوي.</td><td style="padding:10px; border:1px solid #ddd;">التحليل</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تنشئ اختبارًا جاهزًا بصيغة CSV متوافقًا مع متطلبات منصة Quizizz.</td><td style="padding:10px; border:1px solid #ddd;">المهاري</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تذكر وظيفة زر "Add Image" و"Add Video" في منصّة Quizizz.</td><td style="padding:10px; border:1px solid #ddd;">التذكر</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">توضح الفرق بين إضافة صورة وإضافة فيديو في Quizizz.</td><td style="padding:10px; border:1px solid #ddd;">الفهم</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تضيف صورة داخل سؤال في منصة Quizizz.</td><td style="padding:10px; border:1px solid #ddd;">المهاري</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تضيف فيديو داخل سؤال في منصة Quizizz.</td><td style="padding:10px; border:1px solid #ddd;">المهاري</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تقيم فاعلية استخدام الوسائط في تحسين تفاعل المتعلمين داخل الاختبار.</td><td style="padding:10px; border:1px solid #ddd;">التقييم</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تعرف مفهوم حفظ ومشاركة الاختبار في منصة Quizizz.</td><td style="padding:10px; border:1px solid #ddd;">التذكر</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تنفذ خطوات تعيين واجب منزلي أو بدء اختبار مباشر في Quizizz.</td><td style="padding:10px; border:1px solid #ddd;">التطبيق</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تحلل مزايا طرق المشاركة الثلاث (رابط – واجب – مباشر).</td><td style="padding:10px; border:1px solid #ddd;">التحليل</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تنشئ اختبارًا وتشاركه عبر ثلاث طرق مختلفة في منصة Quizizz.</td><td style="padding:10px; border:1px solid #ddd;">المهاري</td></tr>
+
+  </tbody>
+</table>
+`,
+            m3c: "<h2>محتوى الموديول الثالث</h2><p>يشمل المحتوى: طرق إضافة أنواع مختلفة من الأسئلة (اختيار من متعدد، ملء الفراغ، سؤال مفتوح)، تنظيم الأسئلة في مجموعات، وتضمين الوسائط المتعددة (صور/فيديو).</p>",
+            m3a: "<h2>أنشطة الموديول الثالث</h2><p>إنشاء اختبار متكامل على Quizizz يتضمن 5 أسئلة من أنواع مختلفة واستخدام صورة في أحد الأسئلة.</p>",
+            m4g: `
+<h2>الأهداف التعليمية للموديول الرابع</h2>
+
+<table style="width:100%; border-collapse:collapse; background:#fff; color:#000; border-radius:10px; overflow:hidden;">
+  <thead>
+    <tr style="background:#0b3c88; color:#fff; text-align:center;">
+      <th style="padding:10px; border:1px solid #ddd;">الهدف</th>
+      <th style="padding:10px; border:1px solid #ddd;">مستوى الهدف</th>
+    </tr>
+  </thead>
+
+  <tbody>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تعدد طرق تشغيل الاختبار في منصة Quizizz.</td><td style="padding:10px; border:1px solid #ddd;">التذكر</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">توضح الفرق بين وضعي "Live" و"Homework" في منصة Quizizz.</td><td style="padding:10px; border:1px solid #ddd;">الفهم</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تطبق خطوات تشغيل الاختبار في كلا الوضعين على منصة Quizizz.</td><td style="padding:10px; border:1px solid #ddd;">التطبيق</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تشغل الاختبار بوضع المباشر (Live).</td><td style="padding:10px; border:1px solid #ddd;">المهاري</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تشغل الاختبار بوضع المباشر (Homework).</td><td style="padding:10px; border:1px solid #ddd;">المهاري</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تحلل خصائص كل وضع لتحديد الموقف التعليمي المناسب لاستخدامه.</td><td style="padding:10px; border:1px solid #ddd;">التحليل</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تقارن بين الوضعين من حيث التفاعل والتحكم والتقويم الفوري.</td><td style="padding:10px; border:1px solid #ddd;">التحليل</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تذكر الخطوات الأساسية لتتبع أداء الطلاب أثناء الاختبار في منصة Quizizz.</td><td style="padding:10px; border:1px solid #ddd;">التذكر</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">توضح أهمية تتبع الأداء اللحظي للطلاب خلال جلسة الاختبار.</td><td style="padding:10px; border:1px solid #ddd;">الفهم</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تنفذ خطوات تشغيل جلسة اختبار Live Quiz ومتابعة الأداء عبر Teacher Dashboard.</td><td style="padding:10px; border:1px solid #ddd;">التطبيق</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تشغيل جلسة اختبار Live Quiz ومتابعة الأداء عبر Teacher Dashboard.</td><td style="padding:10px; border:1px solid #ddd;">المهاري</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تحلل بيانات الأداء الظاهرة أثناء الاختبار لتحديد نقاط القوة والضعف لدى الطلاب.</td><td style="padding:10px; border:1px solid #ddd;">التحليل</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تقيم فاعلية استخدام خاصية تتبع الأداء في تحسين التدريس الفوري.</td><td style="padding:10px; border:1px solid #ddd;">التقييم</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تعرف مفهوم تقارير الأداء في منصة Quizizz.</td><td style="padding:10px; border:1px solid #ddd;">التذكر</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تشرح أهمية تقارير الأداء في تحسين جودة التعليم.</td><td style="padding:10px; border:1px solid #ddd;">الفهم</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تطبق خطوات استخراج تقرير أداء لاختبار تم على المنصة.</td><td style="padding:10px; border:1px solid #ddd;">التطبيق</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تتبع تقارير الأداء للطلاب.</td><td style="padding:10px; border:1px solid #ddd;">المهاري</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تحلل بيانات تقرير الأداء لتحديد مواطن القوة والضعف لدى الطلاب.</td><td style="padding:10px; border:1px solid #ddd;">التحليل</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تستخرج تقارير الأداء للطلاب.</td><td style="padding:10px; border:1px solid #ddd;">المهاري</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تستنتج فاعلية أساليب التدريس بناءً على نتائج التقارير المستخرجة.</td><td style="padding:10px; border:1px solid #ddd;">التحليل</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تقترح خطة دعم تربوية مبنية على نتائج التقرير لتحسين التحصيل.</td><td style="padding:10px; border:1px solid #ddd;">الابتكار</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تذكر خطوات تحليل نتائج الطلاب في منصة Quizizz.</td><td style="padding:10px; border:1px solid #ddd;">التذكر</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تشرح أهمية تقارير الأداء في تحسين جودة التعليم.</td><td style="padding:10px; border:1px solid #ddd;">الفهم</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تحلل نتائج اختبار فعلي باستخدام تقارير Quizizz.</td><td style="padding:10px; border:1px solid #ddd;">المهاري</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تميز بين أنواع الأخطاء الطلابية (مفاهيمية / تسرّع / فهم خاطئ) في النتائج.</td><td style="padding:10px; border:1px solid #ddd;">التحليل</td></tr>
+
+    <tr><td style="padding:10px; border:1px solid #ddd;">تقترح خطة تطويرية لتحسين أداء الطلاب بناءً على تحليل النتائج.</td><td style="padding:10px; border:1px solid #ddd;">الابتكار</td></tr>
+
+  </tbody>
+</table>
+`,
+            m4c: "<h2>محتوى الموديول الرابع</h2><p>شرح خيارات بدء الاختبار (حي أو واجب منزلي)، وكيفية الوصول إلى تقارير الأداء، وتحليل النتائج لتحديد نقاط القوة والضعف لدى الطلاب.</p>",
+            m4a: "<h2>أنشطة الموديول الرابع</h2><p>تشغيل اختبار 'حي' على Quizizz ومراجعة التقرير الناتج عنه، واستنتاج مقترحين لتحسين أداء الطلاب بناءً على التحليل.</p>"
+        };
+
+        // 3. Sub-Button Click Handler (Handles content display)
+        document.querySelectorAll(".sub-btn").forEach(b => {
+            b.onclick = () => {
+                const key = b.getAttribute("data");
+                showTextContent(content[key], titles[key]);
+            };
+        });
+
+        // Initial setup to show the default video for Module 1 on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Find the first module button's data
+            const firstModuleBtn = document.querySelector(".module-btn[data-video='module1.mp4']");
+            if (firstModuleBtn) {
+                const videoFile = firstModuleBtn.getAttribute("data-video");
+                const videoTitle = firstModuleBtn.getAttribute("data-title");
+                showVideoPlayer(videoFile, videoTitle);
+                // Optionally make the first module dropdown active on load
+                // firstModuleBtn.parentElement.classList.add('active');
+            }
+        });
+    </script>
+
+</body>
+
+</html>

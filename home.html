@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الرئيسية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <style>
+         :root {
+            /* ألوان الرئيسية */
+            --bg-maroon: #0d0246;
+            --main-pink: #d63384;
+            --nav-text-color: #e0e0e0;
+            --device-bg: #ffffff;
+            /* ألوان الدردشة */
+            --dark-bg: #1a0f3d;
+            --curve-bg: #2b1f4a;
+            --pink-accent: #e93e77;
+            --blue-highlight: #4a90e2;
+            --white-text: #ffffff;
+            --chat-bubble: #3c2a63;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+            background-color: var(--bg-maroon);
+            color: white;
+        }
+
+        /* ============================================== */
+        /* === أنماط الصفحة الرئيسية (Home Styles) === */
+        /* ============================================== */
+
+        #home-page {
+            width: 100%;
+            min-height: 100vh;
+        }
+        
+        .background-shape {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60%;
+            height: 110vh;
+            background: linear-gradient(180deg, #3d0c16 0%, #1a0306 100%);
+            border-bottom-left-radius: 60% 100%;
+            z-index: -2;
+            opacity: 0.8;
+        }
+        
+        header {
+            display: flex;
+            justify-content: flex-start;
+            padding: 30px 60px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: var(--nav-text-color);
+            font-weight: 600;
+            font-size: 17px;
+            position: relative;
+            transition: all 0.4s ease;
+        }
+        
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: -5px;
+            right: 0;
+            background-color: var(--main-pink);
+            transition: width 0.3s ease;
+            box-shadow: 0 0 10px var(--main-pink);
+        }
+        
+        nav ul li a:hover::after,
+        nav ul li a.active::after {
+            width: 100%;
+        }
+        
+        .main-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+            height: calc(100vh - 100px);
+        }
+        
+        .text-section {
+            flex: 0 0 45%;
+            text-align: right;
+            padding-right: 40px;
+            z-index: 5;
+        }
+        
+        .text-section h1 {
+            font-size: 24px;
+            line-height: 1.7;
+            font-weight: 700;
+            margin-bottom: 40px;
+            color: #ff85b3;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        .btn-start {
+            display: inline-block;
+            background: linear-gradient(90deg, #d63384 0%, #8b1c50 100%);
+            color: white;
+            padding: 14px 45px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 20px;
+            position: relative;
+            box-shadow: 0 0 0 0 rgba(214, 51, 132, 0.7);
+            animation: pulse-pink 2s infinite;
+        }
+        
+        @keyframes pulse-pink {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(214, 51, 132, 0.7);
+            }
+            70% {
+                transform: scale(1.02);
+                box-shadow: 0 0 0 15px rgba(214, 51, 132, 0);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(214, 51, 132, 0);
+            }
+        }
+        /* ============================================== */
+        /* === أنماط قسم الصور (Image/Illustration Section) === */
+        /* ============================================== */
+        
+        .illustration-section {
+            flex: 0 0 55%;
+            position: relative;
+            height: 600px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: float-container 6s ease-in-out infinite;
+        }
+        
+        .css-device,
+        .tablet-container {
+            display: none;
+        }
+        
+        .faculty-display-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 60px;
+            flex-direction: row;
+            /* عرض الصور جنباً إلى جنب */
+            height: 100%;
+        }
+        
+        .member-card-large {
+            text-align: center;
+            max-width: 250px;
+            color: var(--nav-text-color);
+            padding: 20px;
+            background: rgba(43, 31, 74, 0.2);
+            border-radius: 15px;
+        }
+        
+        .member-card-large img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 7px solid var(--main-pink);
+            box-shadow: 0 0 25px rgba(214, 51, 132, 0.8);
+            margin-bottom: 15px;
+            transition: transform 0.3s;
+        }
+        
+        .member-card-large img:hover {
+            transform: scale(1.05);
+        }
+        
+        .member-card-large p {
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 1.5;
+        }
+        /* ================================================= */
+        /* === أنماط أيقونة الدردشة والشاشة المنبثقة (Chatbot & Modal Styles) === */
+        /* ================================================= */
+        /* --- أيقونة الدردشة (Chat Icon) --- */
+        
+        #chat-icon-button {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 60px;
+            height: 60px;
+            background-color: var(--pink-accent);
+            color: var(--white-text);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(233, 62, 119, 0.6);
+            z-index: 1000;
+            transition: transform 0.3s;
+        }
+        
+        #chat-icon-button:hover {
+            transform: scale(1.1);
+        }
+        /* --- نافذة الدردشة المنبثقة (Chat Window) --- */
+        
+        #chat-window {
+            position: fixed;
+            bottom: 100px;
+            left: 30px;
+            width: 350px;
+            height: 450px;
+            background-color: var(--curve-bg);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            z-index: 999;
+            display: none;
+            /* مخفية افتراضياً */
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .chat-header {
+            background-color: var(--pink-accent);
+            color: white;
+            padding: 15px;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .chat-header span {
+            cursor: pointer;
+            font-size: 20px;
+        }
+        
+        .chat-body {
+            padding: 20px;
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+        /* تصميم فقاعات الأسئلة */
+        
+        .bot-message {
+            background-color: var(--chat-bubble);
+            color: var(--white-text);
+            padding: 10px 15px;
+            border-radius: 15px 15px 15px 0;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        .question-button {
+            display: flex;
+            /* لترتيب الأيقونة والنص */
+            align-items: center;
+            justify-content: flex-end;
+            /* لمحاذاة العناصر لليمين */
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            background-color: var(--blue-highlight);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            transition: background-color 0.3s;
+            text-align: right;
+        }
+        
+        .question-button:hover {
+            background-color: #3b74b6;
+        }
+        /* --- شاشة المحتوى المنبثقة (Modal) --- */
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.8);
+            padding-top: 60px;
+        }
+        
+        .modal-content {
+            background-color: var(--curve-bg);
+            margin: 5% auto;
+            padding: 20px;
+            border-radius: 15px;
+            width: 80%;
+            max-width: 700px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+            position: relative;
+        }
+        
+        .close-btn {
+            color: var(--pink-accent);
+            float: left;
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .modal-content h2 {
+            color: var(--pink-accent);
+            text-align: right;
+            border-bottom: 2px solid var(--pink-accent);
+            padding-bottom: 10px;
+        }
+        
+        #modal-body-content {
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="home-page">
+        <div class="background-shape"></div>
+        <header>
+            <nav>
+                <ul>
+                    <li><a href="home.html" class="active">الرئيسية</a></li>
+                    <li><a href="instructions.html">تعليمات البيئة</a></li>
+                    <li><a href="goals.html">الأهداف</a></li>
+                    <li><a href="overall.html">المقياس</a></li>
+                    <li><a href="modules.html">الموديولات</a></li>
+                    <li><a href="test.html">الاختبار</a></li>
+                    <li><a href="Connect.html">تواصل معنا</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main class="main-container">
+
+            <div class="illustration-section">
+                <div class="faculty-display-container">
+
+                    <div class="member-card-large">
+                        <img src="najlaa.jpeg" alt="صورة أ.م.د/ نجلاء سعيد محمد">
+                        <p>أ.م.د/ نجـلاء سعيد محمد</p>
+                    </div>
+
+                    <div class="member-card-large">
+                        <img src="lamyaa.jpeg" alt="صورة د/ لمياء محمد الهادي">
+                        <p>د/ لمياء محمد الهادي</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-section">
+                <h1>
+                    التفاعل بين نمطي المحادثة الذكية وتفضيلات التعلم الرقمي وأثره علي تنمية مهارات تصميم الاختبارات الالكترونية وكفاءة الذات الرقمية لدي أعضاء هيئة التدريس بكلية التربية النوعية - جامعة الزقازيق
+                </h1>
+                <a href="instructions.html" class="btn-start">ابدأ الآن</a>
+            </div>
+
+        </main>
+    </div>
+
+    <div id="chat-icon-button">
+        <i class="material-icons">chat</i>
+    </div>
+
+    <div id="chat-window">
+        <div class="chat-header">
+            مساعد المنصة الذكي
+            <span onclick="toggleChatWindow()"><i class="material-icons">close</i></span>
+        </div>
+        <div class="chat-body">
+            <div class="bot-message">
+                مرحباً بك! أنا مساعدك الشخصي. كيف يمكنني مساعدتك اليوم؟
+
+                <button class="question-button" onclick="showModal('video')">
+                    <i class="material-icons" style="font-size: 18px; vertical-align: middle; margin-left: 5px;">volume_up</i>
+                    ماهي البرامج التي تصمم اختبارات إلكترونية؟
+                </button>
+
+                <button class="question-button" onclick="showModal('text')">
+                    ماهي مكونات الشاشه الرئيسية للبرنامج quizzes
+                </button>
+
+                <button class="question-button" onclick="showModal('audio')">
+                    يمكن استخدام الاختبارات التفاعلية لقياس مهارات التصنيف والتنظيم.
+                </button>
+
+                <button class="question-button" onclick="showModal('combined')">
+                    من خصائص الاختبارات الموضوعية أنها تعتمد على رأي المصحح.
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="content-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h2 id="modal-title"></h2>
+            <div id="modal-body-content">
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        // *** عناصر الدردشة ***
+        const chatWindow = document.getElementById('chat-window');
+        const modal = document.getElementById('content-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalBodyContent = document.getElementById('modal-body-content');
+
+        // *** سكريبت الدردشة التفاعلية ***
+
+        // وظيفة إظهار/إخفاء نافذة الدردشة
+        function toggleChatWindow() {
+            if (chatWindow.style.display === 'flex') {
+                chatWindow.style.display = 'none';
+            } else {
+                chatWindow.style.display = 'flex';
+            }
+        }
+        document.getElementById('chat-icon-button').onclick = toggleChatWindow;
+
+
+        // وظيفة إظهار شاشة المحتوى المنبثقة
+        function showModal(contentType) {
+
+            toggleChatWindow();
+
+            let contentHTML = '';
+            let title = '';
+            let videoFile = '';
+            let textContent = '';
+
+            // يتم تعيين العناوين وملفات الوسائط بناءً على الزر المضغوط
+            switch (contentType) {
+                case 'video':
+                    title = 'ماهي البرامج التي تصمم اختبارات إلكترونية؟';
+                    videoFile = 'video1.mp4';
+                    // === مسار الصور تم تصحيحه بإضافة امتداد .jpg ===
+                    textContent = `
+                        <div style="display: flex; justify-content: space-around; gap: 15px; margin-top: 20px;">
+                            <img src="image1.jpg" alt="صورة برنامج تصميم اختبارات 1" style="width: 30%; height: auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);">
+                            <img src="image2.jpg" alt="صورة برنامج تصميم اختبارات 2" style="width: 30%; height: auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);">
+                            <img src="image3.jpg" alt="صورة برنامج تصميم اختبارات 3" style="width: 30%; height: auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);">
+                        </div>
+                    `;
+                    break;
+
+                case 'text':
+                    title = 'الاختبارات المقالية الإلكترونية تُصحح غالبًا آليًا';
+                    videoFile = 'video2.mp4';
+                    textContent = 'الاختبارات المقالية الإلكترونية تُصحَّح غالبًا آليًا بفضل خوارزميات الذكاء الاصطناعي التي تحلل محتوى الإجابة وتقيّمها وفق معايير محددة مسبقًا، مما يوفّر على المعلم الوقت والجهد، ويضمن دقة أكبر وسرعة في رصد الدرجات. كما تتيح هذه التقنية تقديم تغذية راجعة فورية للطالب تساعده على فهم أخطائه وتحسين مهاراته الكتابية بشكل مستمر.';
+                    break;
+
+                case 'audio':
+                    title = 'يمكن استخدام الاختبارات التفاعلية لقياس مهارات التصنيف والتنظيم.';
+                    videoFile = 'video3.mp4';
+                    textContent = 'يمكن استخدام الاختبارات التفاعلية لقياس مهارات التصنيف والتنظيم، وذلك من خلال أنشطة تعتمد على سحب وإفلات العناصر، أو ترتيب المعلومات، أو تجميع الصور والرموز في فئات محددة. وتساعد هذه الأنشطة في الكشف عن قدرة المتعلم على الربط بين المفاهيم، وتنظيم الأفكار، وتحديد العلاقات بينها بطريقة عملية وسهلة، مما يجعل عملية القياس أكثر دقة ومتعة في آن واحد.';
+                    break;
+
+                case 'combined':
+                    title = 'من خصائص الاختبارات الموضوعية أنها تعتمد على رأي المصحح.';
+                    videoFile = 'video4.mp4';
+                    textContent = 'من خصائص الاختبارات الموضوعية أنها لا تعتمد على رأي المصحح، إذ تكون إجاباتها محددة وواضحة، مما يجعل عملية التصحيح ثابتة لا تتأثر بوجهات النظر الشخصية. لذلك تُعَدّ هذه الاختبارات أكثر عدالة ودقة وموضوعية في قياس مستوى المتعلمين.';
+                    break;
+            }
+
+            // الهيكل الذي يجمع الفيديو والصور (أو النص لبقية الحالات)
+            contentHTML = `
+                <div style="text-align: right; color: var(--white-text); margin-bottom: 25px; padding: 10px; border: 1px solid #4a90e2; border-radius: 8px;">
+                    
+                    <h3 style="color: var(--pink-accent); margin-bottom: 10px;">🎥 محتوى الفيديو</h3>
+                    <video controls width="100%" height="auto" style="border-radius: 8px; margin-bottom: 15px;">
+                        <source src="${videoFile}" type="video/mp4">
+                        متصفحك لا يدعم عرض الفيديو.
+                    </video>
+
+                    <h3 style="color: var(--pink-accent); margin-bottom: 10px;">📝 النص التوضيحي/الصور</h3>
+                    <div style="background-color: var(--dark-bg); padding: 15px; border-radius: 8px;">
+                        ${textContent}
+                    </div>
+                </div>
+            `;
+
+
+            modalTitle.textContent = title;
+            modalBodyContent.innerHTML = contentHTML;
+            modal.style.display = 'block';
+        }
+
+        // وظيفة إغلاق شاشة المحتوى المنبثقة
+        function closeModal() {
+            // إيقاف أي وسائط تعمل عند الإغلاق
+            const activeMedia = modalBodyContent.querySelector('video, audio');
+            if (activeMedia) {
+                activeMedia.pause();
+                // إعادة تعيين محتوى الجسم لتنظيفه
+                modalBodyContent.innerHTML = '';
+            }
+            modal.style.display = 'none';
+        }
+    </script>
+
+</body>
+
+</html>

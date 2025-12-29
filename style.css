@@ -1,0 +1,181 @@
+/* إعدادات عامة */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Tajawal', sans-serif;
+    background-color: #0f1526;
+    color: #ffffff;
+    direction: rtl;
+    min-height: 100vh;
+}
+
+/* القائمة العلوية */
+header {
+    background-color: #0f1526;
+    padding: 20px 0;
+    border-bottom: none; 
+}
+
+.navbar ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    flex-wrap: wrap;
+    gap: 70px; 
+}
+
+.navbar a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.1rem;
+    padding-bottom: 8px;
+    transition: color 0.3s;
+    border-bottom: 3px solid transparent;
+}
+
+.navbar a:hover {
+    color: #d63384;
+    border-bottom: 3px solid #d63384;
+}
+
+.navbar a.active {
+    color: #ffffff;
+    border-bottom: 3px solid #d63384;
+}
+
+/* المحتوى الرئيسي */
+.container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+    position: relative;
+    z-index: 10;
+}
+
+/* شريط الأزرار */
+.controls-bar {
+    display: flex;
+    justify-content: center; /* توسيط الأزرار */
+    margin-bottom: 25px;
+}
+
+.scale-buttons {
+    display: flex;
+    gap: 20px;
+}
+
+/* تصميم الأزرار العلوية */
+.scale-select-btn {
+    padding: 12px 30px;
+    background-color: #2c3e50;
+    border: 1px solid #34495e;
+    color: white;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+}
+
+.scale-select-btn:hover {
+    background-color: #3e5871;
+    transform: translateY(-2px);
+}
+
+.icon {
+    margin-left: 10px;
+}
+
+/* منطقة العرض */
+.viewer-container {
+    background-color: #1a2236;
+    border-radius: 10px;
+    height: 700px;
+    position: relative;
+    border: 2px solid #2d3b55;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+/* رسائل الحالة */
+.status-msg {
+    color: #6b7a99;
+    font-size: 1.2rem;
+}
+
+/* حاوية زر البدء الداخلي */
+.start-wrapper {
+    text-align: center;
+}
+
+.start-wrapper p {
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+    color: #aebad4;
+}
+
+/* زر "اضغط هنا" الكبير */
+.action-btn {
+    padding: 15px 40px;
+    background-color: #d63384; /* اللون الوردي */
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 50px; /* دائري الحواف */
+    cursor: pointer;
+    font-family: 'Tajawal', sans-serif;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 5px 15px rgba(214, 51, 132, 0.4);
+}
+
+.action-btn:hover {
+    background-color: #c21b66;
+    transform: scale(1.05);
+}
+
+/* الإطار */
+iframe {
+    width: 100%;
+    height: 100%;
+    display: none;
+    background-color: white;
+}
+
+/* الزخرفة */
+.corner-shape {
+    position: fixed;
+    width: 150px;
+    height: 150px;
+    background-color: #d63384;
+    z-index: 100;
+    pointer-events: none;
+    opacity: 0.8;
+}
+
+.top-left { top: 0; left: 0; clip-path: polygon(0 0, 100% 0, 0 100%); }
+.bottom-right { bottom: 0; right: 0; clip-path: polygon(100% 100%, 0 100%, 100% 0); }
+
+@media (max-width: 768px) {
+    .scale-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+    .scale-select-btn {
+        justify-content: center;
+    }
+    .viewer-container {
+        height: 500px;
+    }
+}

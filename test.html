@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Advanced Quiz Animation</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Tahoma, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #4b0303, #010050);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        /* ================= Container ================= */
+        
+        .container {
+            width: 95%;
+            height: 90vh;
+            background: linear-gradient(145deg, #0c1c3a, #132b5c);
+            border-radius: 60px;
+            position: relative;
+            overflow: hidden;
+            animation: pageEnter 1.6s ease forwards;
+        }
+        
+        .container::before {
+            content: "";
+            position: absolute;
+            inset: -50%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.08), transparent 60%);
+            animation: lightMove 10s infinite linear;
+        }
+        /* ================= Navbar ================= */
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 60px;
+            color: #fff;
+            animation: navbarDrop 1.2s ease forwards;
+        }
+        
+        .nav-links {
+            position: relative;
+            display: flex;
+            gap: 20px;
+        }
+        /* Indicator */
+        
+        .indicator {
+            position: absolute;
+            bottom: -12px;
+            height: 4px;
+            background: linear-gradient(90deg, #001142, #300023);
+            border-radius: 10px;
+            transition: 0.4s ease;
+        }
+        /* Tabs */
+        
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            position: relative;
+            padding: 6px 4px;
+            opacity: 0;
+            transform: translateY(-15px);
+            animation: tabFade .6s forwards;
+            transition: .3s;
+        }
+        
+        .nav-links a:nth-child(1) {
+            animation-delay: .2s
+        }
+        
+        .nav-links a:nth-child(2) {
+            animation-delay: .3s
+        }
+        
+        .nav-links a:nth-child(3) {
+            animation-delay: .4s
+        }
+        
+        .nav-links a:nth-child(4) {
+            animation-delay: .5s
+        }
+        
+        .nav-links a:nth-child(5) {
+            animation-delay: .6s
+        }
+        
+        .nav-links a:nth-child(6) {
+            animation-delay: .7s
+        }
+        
+        .nav-links a:nth-child(7) {
+            animation-delay: .8s
+        }
+        /* Hover */
+        
+        .nav-links a:hover {
+            color: #000d39;
+            transform: translateY(-4px) scale(1.08);
+        }
+        /* Active */
+        
+        .nav-links a.active {
+            color: #37001e;
+        }
+        /* Glow active */
+        
+        .nav-links a.active::after {
+            content: "";
+            position: absolute;
+            inset: -8px -10px;
+            background: rgba(120, 150, 255, .15);
+            filter: blur(14px);
+            border-radius: 12px;
+            z-index: -1;
+        }
+        /* Click ripple */
+        
+        .nav-links a::before {
+            content: "";
+            position: absolute;
+            inset: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, .3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: .5s;
+        }
+        
+        .nav-links a:active::before {
+            width: 130%;
+            height: 130%;
+        }
+        
+        .arrows {
+            font-size: 28px;
+            animation: arrowFloat 1.8s infinite ease-in-out;
+        }
+        /* ================= Center ================= */
+        
+        .center {
+            height: 70%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .quiz-btn {
+            background: linear-gradient(120deg, #250074, #3b58c8, #2f0a43);
+            background-size: 200% 200%;
+            color: #fff;
+            font-size: 56px;
+            padding: 26px 120px;
+            border-radius: 60px;
+            border: none;
+            cursor: pointer;
+            animation: gradientMove 5s infinite linear, pulseGlow 2.5s infinite, floatBtn 3s infinite ease-in-out;
+        }
+        
+        .quiz-btn:hover {
+            transform: scale(1.12);
+        }
+        
+        .line {
+            width: 350px;
+            height: 9px;
+            background: #fff;
+            border-radius: 10px;
+            margin-top: 20px;
+            animation: lineWave 2.2s infinite ease-in-out;
+        }
+        /* ================= Animations ================= */
+        
+        @keyframes pageEnter {
+            from {
+                opacity: 0;
+                transform: scale(.92);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        @keyframes navbarDrop {
+            from {
+                opacity: 0;
+                transform: translateY(-40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes tabFade {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes arrowFloat {
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+            50% {
+                transform: translateX(-12px);
+            }
+        }
+        
+        @keyframes gradientMove {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        
+        @keyframes pulseGlow {
+            0%,
+            100% {
+                box-shadow: 0 0 0 rgba(189, 123, 224, .6);
+            }
+            50% {
+                box-shadow: 0 0 45px rgba(189, 123, 224, .8);
+            }
+        }
+        
+        @keyframes floatBtn {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-12px);
+            }
+        }
+        
+        @keyframes lineWave {
+            0% {
+                width: 260px
+            }
+            50% {
+                width: 350px
+            }
+            100% {
+                width: 260px
+            }
+        }
+        
+        @keyframes lightMove {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- Navbar -->
+        <div class="navbar">
+            <div class="nav-links" id="tabs">
+                <span class="indicator" id="indicator"></span>
+
+                <li><a href="Home.html">الرئيسية</a></li>
+                </li>
+                <li><a href="instructions.html">تعليمات البيئة</a></li>
+                <li><a href="instructions.html">الأهداف</a></li>
+                <li><a href="overall.html">المقياس</a></li>
+                <li><a href="modules.html">الموديولات</a></li>
+                <li><a href="test.html">الاختبار</a></li>
+                <li>
+                    <a href="Connect.html">تواصل معنا</a>
+                </li>
+            </div>
+
+            <div class="arrows">
+                <<<</div>
+            </div>
+
+            <!-- Center -->
+            <div class="center">
+                <button class="quiz-btn" onclick="goToQuiz()">Quiz</button>
+
+                <script>
+                    function goToQuiz() {
+                        window.location.href = "https://docs.google.com/forms/d/e/1FAIpQLScx7sK4OkSnHefA-nAifEe2LEueVNoa_TnvOWRUjWvCbDNnpA/viewform?usp=dialog";
+                    }
+                </script>
+
+                <div class="line"></div>
+            </div>
+
+        </div>
+
+        <script>
+            const tabs = document.querySelectorAll(".nav-links a");
+            const indicator = document.getElementById("indicator");
+
+            function moveIndicator(el) {
+                indicator.style.width = el.offsetWidth + "px";
+                indicator.style.left = el.offsetLeft + "px";
+            }
+
+            // init
+            moveIndicator(document.querySelector(".nav-links a.active"));
+
+            tabs.forEach(tab => {
+                tab.addEventListener("mouseenter", () => moveIndicator(tab));
+                tab.addEventListener("click", e => {
+                    e.preventDefault();
+                    tabs.forEach(t => t.classList.remove("active"));
+                    tab.classList.add("active");
+                    moveIndicator(tab);
+                });
+            });
+        </script>
+
+</body>
+
+</html>

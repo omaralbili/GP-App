@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>واجهة الموديولات HTML</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+         :root {
+            --pink: #3f0033;
+            --navy: #091433;
+        }
+        
+        * {
+            box-sizing: border-box
+        }
+        
+        body {
+            margin: 0;
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(90deg, #0f2340 35%, var(--pink) 35%);
+            min-height: 100vh;
+            color: #fff;
+            overflow-x: hidden;
+        }
+        
+        header {
+            display: flex;
+            justify-content: flex-start;
+            gap: 28px;
+            padding: 28px 48px;
+            align-items: center
+        }
+        
+        nav {
+            display: flex;
+            gap: 28px;
+            margin-left: auto
+        }
+        
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            opacity: 0.95;
+            transition: 0.3s ease
+        }
+        
+        nav a.active {
+            border-bottom: 3px solid #7ce0ff;
+            padding-bottom: 4px;
+            transition: 0.3s ease
+        }
+        
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.18);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25)
+        }
+        
+        .container {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            padding: 20px 48px
+        }
+        
+        .left {
+            background: var(--navy);
+            width: 66%;
+            height: 72vh;
+            border-radius: 0 80px 80px 0;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+            padding: 48px;
+            position: relative;
+            overflow: hidden
+        }
+        
+        .left .frame {
+            width: 70%;
+            min-width: 420px;
+            background: #f0f3f7;
+            padding: 18px;
+            border-radius: 6px;
+            margin: 40px auto;
+            box-shadow: 16px 18px 30px rgba(0, 0, 0, 0.4);
+            aspect-ratio: 16/9;
+            height: auto;
+            overflow: hidden
+        }
+        
+        .left img.mock {
+            width: 100%;
+            display: block;
+            border-radius: 2px
+        }
+        
+        .caption {
+            color: #ffffff;
+            background: transparent;
+            padding: 18px 10px;
+            text-align: center;
+            font-weight: 700;
+            margin-top: 8px
+        }
+        
+        .left .decor-vertical {
+            position: absolute;
+            left: 20px;
+            top: 40%;
+            width: 8px;
+            height: 120px;
+            background: #fff;
+            opacity: 0.9;
+            border-radius: 4px
+        }
+        
+        .left .dots {
+            position: absolute;
+            right: 28px;
+            top: 28px;
+            display: grid;
+            grid-template-columns: repeat(5, 8px);
+            gap: 8px;
+            opacity: 0.18
+        }
+        
+        .left .dots span {
+            width: 6px;
+            height: 6px;
+            background: #9fb3d6;
+            border-radius: 50%
+        }
+        
+        .right {
+            width: 34%;
+            height: 72vh;
+            padding: 80px 48px 48px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 22px
+        }
+        
+        .btn {
+            width: 95%;
+            max-width: 300px;
+            padding: 20px 22px;
+            border-radius: 32px;
+            text-align: center;
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1.15rem;
+            box-shadow: inset 10px 10px 20px rgba(0, 0, 0, 0.15)
+        }
+        
+        .btn:first-child {
+            background: linear-gradient(90deg, #0f2340, #e89ccf);
+            color: #fff
+        }
+        
+        .btn:not(:first-child) {
+            background: linear-gradient(90deg, #0f2340, #e89ccf);
+            color: #fff
+        }
+        
+        .btn:hover {
+            transform: translateY(-4px);
+            transition: all .25s ease
+        }
+        
+        .arrows-top {
+            position: absolute;
+            left: 18px;
+            top: 18px;
+            color: #fff;
+            opacity: 0.85
+        }
+        
+        @media (max-width:1000px) {
+            body {
+                background: linear-gradient(180deg, var(--pink) 36%, #0f2340 36%)
+            }
+            .container {
+                flex-direction: column;
+                align-items: stretch
+            }
+            .left,
+            .right {
+                width: 100%;
+                border-radius: 20px;
+                height: auto
+            }
+            .left .frame {
+                width: 92%;
+                min-width: auto
+            }
+        }
+        /* Stronger Navigation Animation */
+        
+        nav {
+            animation: dropDown 0.7s ease-out !important;
+        }
+        
+        @keyframes dropDown {
+            0% {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .menu a {
+            position: relative;
+            transition: transform .3s ease, opacity .3s ease;
+        }
+        
+        .menu a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 0;
+            height: 3px;
+            background: white;
+            border-radius: 2px;
+            transition: width .3s ease;
+        }
+        
+        .menu a:hover {
+            transform: scale(1.2) translateY(-2px);
+            opacity: 0.85;
+        }
+        
+        .menu a:hover::after {
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="arrows-top">&gt;&gt;&gt;&gt;&gt;</div>
+        <nav>
+            <li><a href="Home.html">الرئيسية</a></li>
+            <li><a href="instructions.html">تعليمات البيئه</a></li>
+            <li><a href="goals.html">الاهداف</a></li>
+            <li><a href="overall.html">المقياس</a></li>
+            <a class="active" href="#">الموديولات</a></li>
+            <li><a href="test.html">الاختبار</a></li>
+            <li><a href="Connect.html">التواصل معنا</a></li>
+        </nav>
+    </header>
+
+    <div class="container">
+        <aside class="right">
+            <button class="btn" onclick="changeVideo('module1.mp4', 'الأسس النظرية للاختبارات الإلكترونية')">الموديول الأول</button>
+            <button class="btn" onclick="changeVideo('module2.mp4', 'المهارات التمهيدية لإنتاج الاختبارات الإلكترونية من خلال منصة (Quizizz)')">الموديول الثاني</button>
+            <button class="btn" onclick="changeVideo('module3.mp4', 'إنشاء المحتوى التعليمي وإدارته للاختبارات الإلكترونية من خلال منصة (Quizizz)')">الموديول الثالث</button>
+            <button class="btn" onclick="changeVideo('module4.mp4', 'إدارة التفاعل وتحليل أداء أعضاء هيئة التدريس للاختبارات من خلال منصة (Quizizz)')">الموديول الرابع</button>
+
+            <div style="margin-top:18px;color:#0b1730;font-weight:700;opacity:0.9">&gt;&gt;&gt;&gt;&gt;</div>
+        </aside>
+
+        <section class="left">
+            <div class="decor-vertical"></div>
+            <div class="frame">
+                <video id="mainVideo" width="100%" height="100%" controls style="border-radius: 6px;">
+        <source id="videoSrc" src="module1.mp4" type="video/mp4">
+        متصفحك لا يدعم الفيديو
+    </video>
+            </div>
+
+            <div class="caption" id="videoTitle">
+                الأسس النظرية للاختبارات الإلكترونية
+            </div>
+
+    </div>
+    <script>
+        function changeVideo(fileName, title) {
+            const video = document.getElementById("mainVideo");
+            const source = document.getElementById("videoSrc");
+            const caption = document.getElementById("videoTitle");
+
+            source.src = fileName;
+            caption.textContent = title;
+
+            video.load();
+            video.play();
+        }
+    </script>
+
+</body>
+<script>
+    function changeVideo(fileName, title) {
+        const video = document.getElementById("mainVideo");
+        const source = document.getElementById("videoSrc");
+        const caption = document.getElementById("videoTitle");
+
+        source.src = fileName;
+        caption.textContent = title;
+
+        video.load();
+        video.play();
+    }
+</script>
+
+</html>

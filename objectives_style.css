@@ -1,0 +1,209 @@
+/* إعدادات عامة للصفحة */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Tajawal', sans-serif;
+    background-color: #0f1526; /* كحلي غامق */
+    color: #ffffff;
+    direction: rtl;
+    min-height: 100vh;
+}
+
+/* ---------------- Navbar (القائمة العلوية) ---------------- */
+header {
+    background-color: #0f1526;
+    padding: 20px 0;
+}
+
+.navbar ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    flex-wrap: wrap;
+    gap: 70px; 
+}
+
+.navbar a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.1rem;
+    padding-bottom: 8px;
+    transition: color 0.3s;
+    border-bottom: 3px solid transparent;
+}
+
+.navbar a:hover {
+    color: #d63384;
+    border-bottom: 3px solid #d63384;
+}
+
+.navbar a.active {
+    color: #ffffff;
+    border-bottom: 3px solid #d63384;
+}
+
+/* ---------------- Main Content (المحتوى) ---------------- */
+.container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+    position: relative;
+    z-index: 10;
+}
+
+/* ترويسة الصفحة (العناوين) */
+.page-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.main-title {
+    color: #d63384; /* وردي */
+    font-size: 2.2rem;
+    margin-bottom: 15px;
+}
+
+.sub-title {
+    color: #fff;
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+}
+
+.college-info {
+    color: #aebad4;
+    font-size: 1rem;
+    margin-bottom: 30px;
+}
+
+/* صندوق المقدمة */
+.intro-box {
+    background-color: #1a2236;
+    padding: 20px;
+    border-radius: 8px;
+    border-right: 5px solid #d63384;
+    display: inline-block;
+    text-align: right;
+    max-width: 800px;
+    margin-top: 10px;
+    line-height: 1.6;
+    font-size: 1.1rem;
+}
+
+/* ---------------- Tables Sections (أقسام الجداول) ---------------- */
+.module-section {
+    background-color: #1a2236;
+    border-radius: 12px;
+    padding: 30px;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    border: 1px solid #2d3b55;
+}
+
+.module-title {
+    color: #fff;
+    font-size: 1.5rem;
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #2c3e50;
+    display: flex;
+    align-items: center;
+}
+
+.module-title::before {
+    content: '';
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-color: #d63384;
+    border-radius: 50%;
+    margin-left: 15px;
+}
+
+/* تصميم الجدول */
+.table-wrapper {
+    overflow-x: auto; /* للتمرير في الموبايل */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1rem;
+}
+
+th, td {
+    padding: 15px;
+    text-align: right;
+    border-bottom: 1px solid #2d3b55;
+}
+
+th {
+    background-color: #232d45;
+    color: #d63384; /* رؤوس الأعمدة وردي */
+    font-weight: bold;
+    font-size: 1.1rem;
+    white-space: nowrap;
+}
+
+/* تلوين الصفوف */
+tbody tr:nth-child(even) {
+    background-color: #1f283d;
+}
+
+tbody tr:hover {
+    background-color: #2c3853;
+    transition: background 0.2s;
+}
+
+/* تنسيق الأعمدة المحددة */
+td:first-child {
+    text-align: center;
+    color: #6b7a99;
+    font-weight: bold;
+    width: 60px;
+}
+
+td:last-child {
+    font-weight: bold;
+    color: #aebad4; /* لون عمود المستوى */
+    width: 140px;
+    text-align: center;
+}
+
+/* ---------------- Decoration (الزخرفة) ---------------- */
+.corner-shape {
+    position: fixed;
+    width: 150px;
+    height: 150px;
+    background-color: #d63384;
+    z-index: 100;
+    pointer-events: none;
+    opacity: 0.8;
+}
+
+.top-left { top: 0; left: 0; clip-path: polygon(0 0, 100% 0, 0 100%); }
+.bottom-right { bottom: 0; right: 0; clip-path: polygon(100% 100%, 0 100%, 100% 0); }
+
+/* ---------------- Responsive (الموبايل) ---------------- */
+@media (max-width: 768px) {
+    .navbar ul {
+        gap: 20px;
+    }
+    .main-title {
+        font-size: 1.6rem;
+    }
+    .sub-title {
+        font-size: 1.1rem;
+    }
+    .module-section {
+        padding: 15px;
+    }
+    th, td {
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+}

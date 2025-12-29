@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مرحباً بك في منصتنا التعليمية</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* تعريف الألوان الرئيسية */
+        
+         :root {
+            --dark-blue: #1a1e26;
+            --navy-blue: #2c323f;
+            --main-pink: #ff69b4;
+            --secondary-pink: #e91e63;
+            --text-light: #f4f4f4;
+            --text-focus: #c39bd3;
+        }
+        /* التنسيقات العامة */
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--navy-blue);
+            color: var(--text-light);
+            direction: rtl;
+            min-height: 100vh;
+        }
+        /* تنسيق الهيكل الرئيسي */
+        
+        .container {
+            position: relative;
+            z-index: 1;
+            padding-top: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        /* تنسيق شريط التنقل (Navigation Bar) */
+        
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 20px 50px;
+            background-color: var(--dark-blue);
+            z-index: 10;
+        }
+        
+        .nav-links {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .nav-links li {
+            margin-left: 35px;
+        }
+        
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 400;
+            padding: 5px 0;
+            transition: color 0.3s ease;
+            position: relative;
+            font-size: 1.1em;
+        }
+        
+        .nav-links a:hover,
+        .nav-links .active a {
+            color: var(--main-pink);
+            font-weight: 700;
+        }
+        /* الخط الفاصل تحت القائمة */
+        
+        .nav-separator {
+            position: absolute;
+            bottom: 0;
+            left: 50px;
+            width: calc(100% - 100px);
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.2);
+            z-index: 11;
+        }
+        /* القسم الهندسي المائل (محاكاة) */
+        
+        .geometric-shape {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            /* موقع مختلف عن صفحة التعليمات */
+            width: 40%;
+            height: 40%;
+            background: linear-gradient(135deg, var(--main-pink) 0%, var(--secondary-pink) 100%);
+            /* إنشاء شكل مائل من الأسفل واليسار */
+            clip-path: polygon(0 50%, 100% 100%, 0 100%);
+            opacity: 0.6;
+            z-index: 0;
+        }
+        /* محتوى الترحيب الرئيسي */
+        
+        .welcome-content {
+            max-width: 900px;
+            margin: 50px auto 0 auto;
+            padding: 50px;
+            position: relative;
+            z-index: 5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+        }
+        /* تنسيق نص الترحيب */
+        
+        .welcome-text {
+            max-width: 60%;
+            text-align: right;
+            line-height: 2.2;
+            font-size: 1.15em;
+            padding-right: 20px;
+        }
+        
+        .welcome-text h1 {
+            color: var(--main-pink);
+            font-size: 2.5em;
+            font-weight: 900;
+            margin-bottom: 20px;
+        }
+        /* تنسيق الرسم التوضيحي (Illustration) */
+        
+        .illustration-placeholder {
+            width: 350px;
+            height: 350px;
+            background-color: #3f4552;
+            /* لون الخلفية للرسم */
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 3px solid var(--text-focus);
+        }
+        /* محاكاة الرسم (باستخدام رمز تعبيري) */
+        
+        .illustration-placeholder::before {
+            content: '🧑‍🤝‍🧑';
+            font-size: 8em;
+            opacity: 0.9;
+        }
+        /* زر العودة للرئيسية */
+        
+        .back-button-area {
+            text-align: center;
+            padding: 50px 0;
+        }
+        
+        .back-button {
+            display: inline-block;
+            background: linear-gradient(to right, var(--secondary-pink), var(--main-pink));
+            color: white;
+            padding: 15px 50px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.3em;
+            font-weight: 700;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(233, 30, 99, 0.4);
+        }
+        
+        .back-button:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 10px 25px rgba(233, 30, 99, 0.6);
+        }
+        /* التجاوبية */
+        
+        @media (max-width: 992px) {
+            .navbar {
+                padding: 15px 20px;
+            }
+            .welcome-content {
+                flex-direction: column;
+                padding: 20px;
+                text-align: center;
+            }
+            .welcome-text {
+                max-width: 100%;
+                padding-right: 0;
+                text-align: center;
+            }
+            .illustration-placeholder {
+                order: -1;
+                margin-bottom: 30px;
+            }
+            .geometric-shape {
+                clip-path: polygon(0 80%, 100% 100%, 0 100%);
+                width: 100%;
+                height: 30%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="geometric-shape"></div>
+
+        <nav class="navbar">
+            <div class="nav-separator"></div>
+            <ul class="nav-links">
+                <li class="active"><a href="#">الرئيسية</a></li>
+                <li><a href="#">تعليمات البيئة</a></li>
+                <li><a href="#">الأهداف</a></li>
+                <li><a href="#">الموديولات</a></li>
+                <li><a href="#">الاختبار</a></li>
+                <li><a href="#">تواصل معنا</a></li>
+            </ul>
+        </nav>
+
+        <div class="welcome-content">
+
+            <div class="illustration-placeholder">
+            </div>
+
+            <div class="welcome-text">
+                <h1>مرحباً بكم في منصتنا التعليمية!</h1>
+                <p>
+                    نسعد بانضمامكم إلى مجتمع التعلُّم الذي يجمع بين المعرفة، الإبداع، وتطوير المهارات. هدفنا هو توفير بيئة تعليمية تفاعلية تساعدكم على اكتشاف قدراتكم وتحقيق طموحاتكم بطرق حديثة وسهلة. نتمنى لكم تجربة تعلُّم ممتعة وملهمة... ونحن دائماً هنا لدعمكم في كل خطوة!
+                </p>
+            </div>
+        </div>
+
+        <div class="back-button-area">
+            <button class="back-button">
+                عودة إلي الرئيسية
+            </button>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
